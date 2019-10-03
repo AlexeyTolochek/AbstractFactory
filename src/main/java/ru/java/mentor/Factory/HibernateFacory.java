@@ -5,7 +5,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.java.mentor.model.User;
 import ru.java.mentor.util.DbHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
