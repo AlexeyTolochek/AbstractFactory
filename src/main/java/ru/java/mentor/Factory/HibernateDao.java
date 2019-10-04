@@ -1,18 +1,27 @@
-package ru.java.mentor.Factory;
+package ru.java.mentor.factory;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.java.mentor.model.User;
-import ru.java.mentor.util.DbHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class HibernateFacory implements DAO {
+public class HibernateDao implements DAO {
 
-    private SessionFactory sessionFactory = DbHelper.getSessionFactory();
+    private static HibernateDao instance;
+    private SessionFactory sessionFactory;
 
-    public HibernateFacory() {
+    private HibernateDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    static HibernateDao getInstance(SessionFactory sessionFactory) {
+        if (instance == null) {
+            instance = new HibernateDao(sessionFactory);
+        }
+        return instance;
     }
 
     @Override
@@ -51,6 +60,21 @@ public class HibernateFacory implements DAO {
         session.delete(user);
         session.getTransaction().commit();
         session.close();
+    }
+
+    @Override
+    public void dropTable() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("delete from User");
+        query.executeUpdate();
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Override
+    public void createTable() {
+
     }
 
     @Override

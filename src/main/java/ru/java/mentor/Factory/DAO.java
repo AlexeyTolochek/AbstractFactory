@@ -1,17 +1,23 @@
-package ru.java.mentor.Factory;
+package ru.java.mentor.factory;
 
 import ru.java.mentor.model.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface DAO {
-    List<User> getAllUsers();
 
-    void addUser(User user);
+    List<User> getAllUsers() throws SQLException;
 
-    void editUser(User user);
+    User getUserById(Long id) throws SQLException;
 
-    void deleteUser(User user);
+    void addUser(User user) throws SQLException;
 
-    User getUserById(Long id);
+    void editUser(User user) throws SQLException;
+
+    void deleteUser(User user) throws SQLException;
+
+    void dropTable() throws SQLException;
+
+    void createTable() throws SQLException;
 }
